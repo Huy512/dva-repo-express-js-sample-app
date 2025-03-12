@@ -87,7 +87,29 @@
         <li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_geddy_elasticache.html">Deploy a Geddy Application with Amazon ElastiCache to AWS Elastic Beanstalk </a></li>
         <li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_custom_container.html">Customizing and Configuring a Node.js Container </a></li>
         <li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.loggingS3.title.html">Working with Logs</a></li>
+        <h1>List</h1>
+    	  <ul id="messagesList"></ul>
       </ul>
     </div>
   </body>
+  
+  <script>
+        function fetchMessages() {
+    	fetch("https://xa1ygj5nce.execute-api.us-east-1.amazonaws.com/test1/pets") // Thay API URL thực tế
+        .then(response => response.json())
+        .then(data => {
+            const messagesList = document.getElementById("messagesList");
+            messagesList.innerHTML = ""; // Xóa danh sách cũ
+
+            data.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.id}: ${item.type}`;
+                messagesList.appendChild(li);
+            });
+        })
+        .catch(error => console.error("Lỗi khi lấy dữ liệu:", error));
+  }
+  // Gọi API khi trang tải xong
+  window.onload = fetchMessages;
+  </script>
 </html>
